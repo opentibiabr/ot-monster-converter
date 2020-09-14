@@ -267,6 +267,14 @@ namespace OTMonsterConverter.Converter
                 monster.ItemIdLookType = (uint)tfsMonster.look.typeex;
             }
 
+            // attack strategies
+            if (tfsMonster.targetstrategies != null) {
+                monster.AttackMinHealthPercent = tfsMonster.targetstrategies.health;
+                monster.AttackMostDamagePercent = tfsMonster.targetstrategies.damage;
+                monster.AttackNearestPercent = tfsMonster.targetstrategies.nearest;
+                monster.AttackRandomPercent = tfsMonster.targetstrategies.random;
+            }
+
             // flags
             if ((tfsMonster.flags != null) &&
                 (tfsMonster.flags.flag != null))
@@ -959,6 +967,7 @@ namespace OTMonsterConverter.Converter
         //[XmlAttribute]
         //public int script; //todo: how to handle
 
+        public TargetStrategies targetstrategies;
         public TFSXmlHealth health;
         public Flags flags;
         public Look look;
@@ -970,6 +979,18 @@ namespace OTMonsterConverter.Converter
         public TfsXmlLoot loot;
         public Elements elements;
         public TFSXmlSummons summons;
+    }
+
+    [XmlRoot(ElementName = "targetstrategies")]
+    public class TargetStrategies {
+        [XmlAttribute]
+        public uint nearest = 0;
+        [XmlAttribute]
+        public uint health = 0;
+        [XmlAttribute]
+        public uint damage = 0;
+        [XmlAttribute]
+        public uint random = 0;
     }
 
     [XmlRoot(ElementName = "health")]

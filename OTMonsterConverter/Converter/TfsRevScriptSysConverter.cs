@@ -248,6 +248,28 @@ namespace OTMonsterConverter.Converter
                 dest.WriteLine("}");
                 dest.WriteLine("");
 
+                // attack strategies
+                if (monster.AttackNearestPercent > 0)
+                {
+                    dest.WriteLine($"monster.targetStrategiesNearestPercent = {monster.AttackNearestPercent};");
+                }
+
+                if (monster.AttackMinHealthPercent > 0)
+                {
+                    dest.WriteLine($"monster.targetStrategiesLowerHPPercent = {monster.AttackMinHealthPercent};");
+                }
+
+                if (monster.AttackMostDamagePercent > 0)
+                {
+                    dest.WriteLine($"monster.targetStrategiesMostDamagePercent = {monster.AttackMostDamagePercent};");
+                }
+
+                if (monster.AttackRandomPercent > 0)
+                {
+                    dest.WriteLine($"monster.targetStrategiesRandom = {monster.AttackRandomPercent};");
+                }
+                dest.WriteLine("");
+
                 // Flags
                 dest.WriteLine("monster.flags = {");
                 if (monster.SummonCost > 0)

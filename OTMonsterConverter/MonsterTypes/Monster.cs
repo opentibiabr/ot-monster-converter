@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OTMonsterConverter.Converter;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -78,6 +79,12 @@ namespace OTMonsterConverter.MonsterTypes
         public uint OutfitIdLookType { get; set; }
         public uint ItemIdLookType { get; set; } // none 0 means creature looks like an item
         public DetailedLookType LookTypeDetails { get; set; }
+
+        // Attack Target Strategy
+        public uint AttackNearestPercent { get; set; }
+        public uint AttackMinHealthPercent { get; set; }
+        public uint AttackMostDamagePercent { get; set; }
+        public uint AttackRandomPercent { get; set; }
 
         // Behavior
         public uint SummonCost { get; set; }
