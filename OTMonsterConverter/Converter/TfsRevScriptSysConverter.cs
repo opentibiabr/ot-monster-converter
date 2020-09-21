@@ -249,26 +249,32 @@ namespace OTMonsterConverter.Converter
                 dest.WriteLine("");
 
                 // attack strategies
-                if (monster.AttackNearestPercent > 0)
+                if (monster.AttackNearestPercent > 0 || monster.AttackMinHealthPercent > 0 || monster.AttackMostDamagePercent > 0 || monster.AttackRandomPercent > 0)
                 {
-                    dest.WriteLine($"monster.targetStrategiesNearestPercent = {monster.AttackNearestPercent};");
-                }
+                    dest.WriteLine("monster.strategiesTarget = {");
+                    if (monster.AttackNearestPercent > 0)
+                    {
+                        dest.WriteLine($"nearest = {monster.AttackNearestPercent},");
+                    }
 
-                if (monster.AttackMinHealthPercent > 0)
-                {
-                    dest.WriteLine($"monster.targetStrategiesLowerHPPercent = {monster.AttackMinHealthPercent};");
-                }
+                    if (monster.AttackMinHealthPercent > 0)
+                    {
+                        dest.WriteLine($"health = {monster.AttackMinHealthPercent},");
+                    }
 
-                if (monster.AttackMostDamagePercent > 0)
-                {
-                    dest.WriteLine($"monster.targetStrategiesMostDamagePercent = {monster.AttackMostDamagePercent};");
-                }
+                    if (monster.AttackMostDamagePercent > 0)
+                    {
+                        dest.WriteLine($"damage = {monster.AttackMostDamagePercent},");
+                    }
 
-                if (monster.AttackRandomPercent > 0)
-                {
-                    dest.WriteLine($"monster.targetStrategiesRandom = {monster.AttackRandomPercent};");
+                    if (monster.AttackRandomPercent > 0)
+                    {
+                        dest.WriteLine($"random = {monster.AttackRandomPercent},");
+                    }
+
+                    dest.WriteLine("}");
+                    dest.WriteLine("");
                 }
-                dest.WriteLine("");
 
                 // Flags
                 dest.WriteLine("monster.flags = {");
