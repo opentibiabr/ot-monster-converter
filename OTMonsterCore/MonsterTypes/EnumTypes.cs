@@ -204,7 +204,11 @@ namespace OTMonsterCore.MonsterTypes
         DrillBolt,
         EnvenomedArrow,
         GloothSpear,
-        SimpleArrow
+        SimpleArrow,
+        LeafStar,
+	    DiamondArrow,
+	    SpectralBolt,
+	    RoyalStar,
     }
 
     public enum Blood

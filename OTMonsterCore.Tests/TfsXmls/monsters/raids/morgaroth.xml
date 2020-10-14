@@ -39,7 +39,7 @@
 		<attack name="physical" interval="2000" chance="20" radius="14" target="0" min="-200" max="-450">
 			<attribute key="areaEffect" value="bluebubble" />
 		</attack>
-		<attack name="melee" interval="3000" chance="15" range="7" radius="3" target="0" min="-100" max="-200">
+		<attack name="physical" interval="3000" chance="15" range="7" radius="3" target="0" min="-100" max="-200">
 			<attribute key="areaEffect" value="blueshimmer" />
 		</attack>
 		<attack name="speed" interval="2000" chance="15" range="7" speedchange="-400" duration="20000">

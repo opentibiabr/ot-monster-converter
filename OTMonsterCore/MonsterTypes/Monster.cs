@@ -16,6 +16,7 @@ namespace OTMonsterCore.MonsterTypes
             Items = new List<Loot>();
             LookTypeDetails = new DetailedLookType();
             Attacks = new List<Spell>();
+            MonsterEvents = new List<string>();
 
             SummonCost = 0;
             Attackable = true;
@@ -62,6 +63,7 @@ namespace OTMonsterCore.MonsterTypes
         // Properties
         // Generic
         public string Name { get; set; }
+        public string RefName { get; set; }
         public string FileName { get; set; }
         public string Description { get; set; }
         public uint Health { get; set; }
@@ -101,7 +103,9 @@ namespace OTMonsterCore.MonsterTypes
         public uint LightLevel { get; set; }
         public uint LightColor { get; set; }
         public bool HideHealth { get; set; }
+        public bool IsBlockable { get; set; }
         public bool IsBoss { get; set; }
+        public IList<string> MonsterEvents { get; set; }
 
         // Walk Behavior
         public bool AvoidFire { get; set; }

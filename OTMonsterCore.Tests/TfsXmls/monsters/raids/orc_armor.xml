@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Orc Warlord" nameDescription="an orc warlord" race="blood" experience="670" speed="234">
+<monster name="Orc Warlord" refName="Orc Armor" nameDescription="an orc warlord" race="blood" experience="670" speed="234">
 	<health now="950" max="950" />
 	<look type="2" corpse="6008" />
 	<targetchange interval="4000" chance="10" />
@@ -41,8 +41,8 @@
 	<voices interval="2000" chance="7">
 		<voice sentence="Ranat Ulderek!" />
 		<voice sentence="Orc buta bana!" />
-	<voice sentence="Ikem rambo zambo!" />
-	<voice sentence="Fetchi Maruk Buta" />
+		<voice sentence="Ikem rambo zambo!" />
+		<voice sentence="Fetchi Maruk Buta" />
 	</voices>
 	<loot>
 		<item id="12409" chance="25000" />				<!-- broken helmet -->
@@ -67,6 +67,6 @@
 		<item id="7891" chance="250" />					<!-- magma boots -->
 		<item id="7395" chance="80" />					<!-- orc trophy -->
 		<item id="2165" chance="80" />					<!-- stealth ring -->
-		<item id="2537" chance="5000" />					<!-- amazon shield -->
+		<item id="2500" chance="5000" />					<!-- amazon armor -->
 	</loot>
 </monster>

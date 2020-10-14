@@ -17,7 +17,7 @@
 		<flag staticattack="70" />
 		<flag runonhealth="0" />
 		<flag canwalkonenergy="1" />
-		<flag canwalkonfire="0" />
+		<flag canwalkonfire="1" />
 		<flag canwalkonpoison="1" />
 	</flags>
 	<attacks>

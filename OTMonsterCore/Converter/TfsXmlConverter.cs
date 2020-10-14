@@ -152,7 +152,11 @@ namespace OTMonsterCore.Converter
             {"drillbolt",           Animation.DrillBolt},
             {"envenomedarrow",      Animation.EnvenomedArrow},
             {"gloothspear",         Animation.GloothSpear},
-            {"simplearrow",         Animation.SimpleArrow}
+            {"simplearrow",         Animation.SimpleArrow},
+            {"leafstar",            Animation.LeafStar},
+            {"diamondarrow",        Animation.DiamondArrow},
+            {"spectralbolt",        Animation.SpectralBolt},
+            {"royalstar",           Animation.RoyalStar}
         };
 
         IDictionary<string, CombatDamage> CombatDamageNames = new Dictionary<string, CombatDamage>
@@ -160,6 +164,7 @@ namespace OTMonsterCore.Converter
             {"physical",    CombatDamage.Physical},
             {"energy",      CombatDamage.Energy},
             {"earth",       CombatDamage.Earth},
+            {"poison",      CombatDamage.Earth},
             {"fire",        CombatDamage.Fire},
             {"lifedrain",   CombatDamage.LifeDrain},
             {"manadrain",   CombatDamage.ManaDrain},
@@ -220,6 +225,11 @@ namespace OTMonsterCore.Converter
                 Speed = (uint)tfsMonster.speed,
                 Race = tfsToGenericBlood(tfsMonster.race),
             };
+
+            if (!string.IsNullOrEmpty(tfsMonster.refName))
+            {
+                monster.RefName = tfsMonster.refName;
+            }
 
             if (!string.IsNullOrEmpty(tfsMonster.nameDescription))
             {
@@ -340,6 +350,10 @@ namespace OTMonsterCore.Converter
                         {
                             monster.HideHealth = value == 1;
                         }
+                        else if (x.attr[0].Name == "isblockable")
+                        {
+                            monster.IsBlockable = value == 1;
+                        }
                         else if (x.attr[0].Name == "canwalkonenergy")
                         {
                             monster.AvoidEnergy = value != 1;
@@ -352,7 +366,7 @@ namespace OTMonsterCore.Converter
                         {
                             monster.AvoidPoison = value != 1;
                         }
-                        else if (x.attr[0].Name == "isboss")
+                        else if (x.attr[0].Name == "isboss" || x.attr[0].Name == "rewardboss")
                         {
                             monster.IsBoss = value == 1;
                         }
@@ -360,6 +374,18 @@ namespace OTMonsterCore.Converter
                         {
                             Console.WriteLine($"Unknown name {x.attr[0].Name}");
                         }
+                    }
+                }
+            }
+
+            if ((tfsMonster.script != null) &&
+                (tfsMonster.script.events != null)) 
+            {
+                foreach (TfsXmlEvent monsterEvent in tfsMonster.script.events)
+                {
+                    if (!(string.IsNullOrEmpty(monsterEvent.name))) 
+                    {
+                        monster.MonsterEvents.Add(monsterEvent.name);
                     }
                 }
             }
@@ -955,6 +981,8 @@ namespace OTMonsterCore.Converter
         [XmlAttribute]
         public string namedescription;
         [XmlAttribute]
+        public string refName;
+        [XmlAttribute]
         public string race = "blood";
         [XmlAttribute]
         public int experience = 0;
@@ -970,6 +998,7 @@ namespace OTMonsterCore.Converter
         public TargetStrategies targetstrategies;
         public TFSXmlHealth health;
         public Flags flags;
+        public TfsXmlScript script;
         public Look look;
         public TargetChange targetchange;
         public Attacks attacks;
@@ -1279,5 +1308,20 @@ namespace OTMonsterCore.Converter
         [XmlAttribute]
         public bool force;
     }
+
+    [XmlRoot(ElementName = "script")]
+    public class TfsXmlScript
+    {
+        [XmlElementAttribute("event")]
+        public TfsXmlEvent[] events;
+    }
+
+    [XmlRoot(ElementName = "event")]
+    public class TfsXmlEvent
+    {
+        [XmlAttribute]
+        public string name;
+    }
+
     #endregion
 }
