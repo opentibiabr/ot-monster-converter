@@ -1,4 +1,4 @@
-﻿using OTMonsterConverter.MonsterTypes;
+﻿using OTMonsterCore.MonsterTypes;
 using ScrapySharp.Extensions;
 using ScrapySharp.Network;
 using System;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace OTMonsterConverter.Converter
+namespace OTMonsterCore.Converter
 {
     public class TibiaWikiConverter : IMonsterConverter
     {
@@ -66,7 +66,7 @@ namespace OTMonsterConverter.Converter
                 mon.AvoidFire = false;
                 mon.AvoidEnergy = false;
                 mon.AvoidPoison = false;
-                foreach (string field in walksaround.Split(","))
+                foreach (string field in walksaround.Split(','))
                 {
                     string fieldtrim = field.Trim().ToLower();
                     if (fieldtrim == "fire")
@@ -96,7 +96,7 @@ namespace OTMonsterConverter.Converter
             new RegexPatternKeys("sounds", @"{{Sound List\|(?<sounds>[a-zA-Z !?.']+(\|[a-zA-Z !?.']+)*)", (mon, mc) =>
             {
                 string sounds = mc.FindNamedGroupValue("sounds");
-                foreach (string sound in sounds.Split("|"))
+                foreach (string sound in sounds.Split('|'))
                 {
                     mon.Voices.Add(new Voice(){ Sound = sound, SoundLevel = SoundLevel.Say });
                 }
@@ -118,7 +118,7 @@ namespace OTMonsterConverter.Converter
             // Abilities should be parsed for summons, melee, attacks, and defenses. Each ability is seperated by a comma
             //   We should be able to get summons (count could be tough), melee (max hit could be tough), healing, haste, and maybe more
             string abilities = mc.FindNamedGroupValue("abilities").ToLower();
-            foreach (string ability in abilities.Split(","))
+            foreach (string ability in abilities.Split(','))
             {
                 string cleanability = ability.Trim();
                 switch (cleanability)
@@ -231,7 +231,7 @@ namespace OTMonsterConverter.Converter
             range = RemoveNonNumericChars(range);
             if (!int.TryParse(range, out max))
             {
-                var ranges = range.Split("-");
+                var ranges = range.Split('-');
                 if (ranges.Length >= 2)
                 {
                     int.TryParse(ranges[0], out min);
@@ -315,7 +315,7 @@ namespace OTMonsterConverter.Converter
                             double count = 0;
                             if (!double.TryParse(amount, out count))
                             {
-                                var amounts = amount.Split("-");
+                                var amounts = amount.Split('-');
                                 if (amounts.Length >= 2)
                                 {
                                     double.TryParse(amounts[1], out count);

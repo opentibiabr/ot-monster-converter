@@ -1,4 +1,4 @@
-﻿using OTMonsterConverter.MonsterTypes;
+﻿using OTMonsterCore.MonsterTypes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,11 +7,11 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
-namespace OTMonsterConverter.Converter
+namespace OTMonsterCore.Converter
 {
     //https://github.com/otland/forgottenserver/blob/master/src/monsters.cpp
 
-    class TfsXmlConverter : IMonsterConverter
+    public class TfsXmlConverter : IMonsterConverter
     {
         const uint MAX_LOOTCHANCE = 100000;
         const uint ATTACK_INTERVAL_DEFAULT = 2000;

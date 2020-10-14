@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using OTMonsterCore;
 
-namespace OTMonsterConverter
+namespace OTMonsterConverterCLI
 {
     class ConsoleWindow
     {

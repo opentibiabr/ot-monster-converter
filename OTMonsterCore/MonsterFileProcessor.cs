@@ -1,5 +1,6 @@
-﻿using OTMonsterConverter.Converter;
-using OTMonsterConverter.MonsterTypes;
+﻿using OTMonsterCore.Converter;
+using OTMonsterCore.MonsterTypes;
+using OTMonsterCore;
 using ScrapySharp.Extensions;
 using ScrapySharp.Network;
 using System;
@@ -10,7 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace OTMonsterConverter
+namespace OTMonsterCore
 {
     public enum ScanError
     {

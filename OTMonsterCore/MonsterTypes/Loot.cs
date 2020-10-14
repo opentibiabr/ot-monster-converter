@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OTMonsterConverter.MonsterTypes
+namespace OTMonsterCore.MonsterTypes
 {
     public class Loot
     {

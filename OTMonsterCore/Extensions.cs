@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace OTMonsterConverter
+namespace OTMonsterCore
 {
     public static class Extensions
     {

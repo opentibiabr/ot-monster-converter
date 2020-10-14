@@ -1,9 +1,9 @@
-﻿using OTMonsterConverter.MonsterTypes;
+﻿using OTMonsterCore.MonsterTypes;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OTMonsterConverter.Converter
+namespace OTMonsterCore.Converter
 {
     public interface IMonsterConverter
     {
