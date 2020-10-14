@@ -1,0 +1,1 @@
+This directory is our source of original xml files we convert to revscriptsys.
