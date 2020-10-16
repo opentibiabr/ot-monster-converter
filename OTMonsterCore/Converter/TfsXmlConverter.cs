@@ -98,7 +98,31 @@ namespace OTMonsterCore.Converter
             {"redsmoke",            Effect.RedSmoke},
             {"yellowsmoke",         Effect.YellowSmoke},
             {"greensmoke",          Effect.GreenSmoke},
-            {"purplesmoke",         Effect.PurpleSmoke}
+            {"purplesmoke",         Effect.PurpleSmoke},
+            {"earlythunder",        Effect.EarlyThunder},
+            {"ragiazbonecapsule",   Effect.RagiazBoneCapsule},
+            {"criticaldamage",      Effect.CriticalDamage},
+            {"plugingfish",         Effect.PlungingFish},
+            {"blueenergyspark",     Effect.BlueEnergySpark},
+            {"orangeenergyspark",   Effect.OrangeEnergySpark},
+            {"greenenergyspark",    Effect.GreenEnergySpark},
+            {"pinkenergyspark",     Effect.PinkEnergySpark},
+            {"whiteenergyspark",    Effect.WhiteEnergySpark},
+            {"yellowenergyspark",   Effect.YellowEnergySpark},
+            {"magicpowder",         Effect.MagicPowder},
+            {"pixieexplosion",      Effect.PixieExplosion},
+            {"pixiecoming",         Effect.PixieComing},
+            {"pixiegoing",          Effect.PixieGoing},
+            {"storm",               Effect.Storm},
+            {"stonestorm",          Effect.StoneStorm},
+            {"blueghost",           Effect.BlueGhost},
+            {"pinkvortex",          Effect.PinkVortex},
+            {"treasuremap",         Effect.TreasureMap},
+            {"pinkbeam",            Effect.PinkBeam},
+            {"greenfireworks",      Effect.GreenFireworks},
+            {"orangefireworks",     Effect.OrangeFireworks},
+            {"pinkfireworks",       Effect.PinkFireworks},
+            {"bluefireworks",       Effect.BlueFireworks}
         };
 
         IDictionary<string, Animation> shootTypeNames = new Dictionary<string, Animation>

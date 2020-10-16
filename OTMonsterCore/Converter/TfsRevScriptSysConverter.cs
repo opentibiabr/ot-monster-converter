@@ -34,7 +34,7 @@ namespace OTMonsterCore.Converter
             {Condition.Drown,       "drown"},
             {Condition.Freezing,    "freezing"},
             {Condition.Dazzled,     "dazzled"},
-            {Condition.Cursed,      "cursed"}
+            {Condition.Cursed,      "cursed"},
         };
        
         IDictionary<string, Condition> StringToCondition = new Dictionary<string, Condition> 
@@ -48,7 +48,8 @@ namespace OTMonsterCore.Converter
             {"drown",       Condition.Drown},
             {"freezing",    Condition.Freezing},
             {"dazzled",     Condition.Dazzled},
-            {"cursed",      Condition.Cursed}
+            {"cursed",      Condition.Cursed},
+            {"curse",       Condition.Cursed}
         };
 
         IDictionary<string, string> ConditionToCombat = new Dictionary<string, string> {
@@ -64,7 +65,8 @@ namespace OTMonsterCore.Converter
             {"freeze",      "COMBAT_ICEDAMAGE"},
             {"freezing",    "COMBAT_ICEDAMAGE"},
             {"dazzled",     "COMBAT_?"},
-            {"cursed",      "COMBAT_?"}
+            {"cursed",      "COMBAT_?"},
+            {"curse",       "COMBAT_FIX_ME"}
         };
 
         IDictionary<string, string> ConditionToComment = new Dictionary<string, string> {
@@ -76,11 +78,12 @@ namespace OTMonsterCore.Converter
             {"physical",    "physical damage"},
             {"bleeding",    "COMBAT_PHYSICALDAMAGE"},
             {"paralyze",    "COMBAT_?"},
-            {"drown",       "COMBAT_DROWN"},
+            {"drown",       "drown"},
             {"freeze",      "freeze"},
             {"freezing",    "COMBAT_ICEDAMAGE"},
             {"dazzled",     "COMBAT_?"},
-            {"cursed",      "COMBAT_?"}
+            {"cursed",      "COMBAT_?"},
+            {"curse",       "curse"}
         };
 
         IDictionary<CombatDamage, string> CombatDamageNames = new Dictionary<CombatDamage, string>
@@ -186,7 +189,27 @@ namespace OTMonsterCore.Converter
             {Effect.EarlyThunder,       "CONST_ME_EARLY_THUNDER"},
             {Effect.RagiazBoneCapsule,  "CONST_ME_RAGIAZ_BONECAPSULE"},
             {Effect.CriticalDamage,     "CONST_ME_CRITICAL_DAMAGE"},
-            {Effect.PlungingFish,       "CONST_ME_PLUNGING_FISH"}
+            {Effect.PlungingFish,       "CONST_ME_PLUNGING_FISH"},
+            {Effect.BlueEnergySpark,    "CONST_ME_BLUE_ENERGY_SPARK"},
+            {Effect.OrangeEnergySpark,  "CONST_ME_ORANGE_ENERGY_SPARK"},
+            {Effect.GreenEnergySpark,   "CONST_ME_GREEN_ENERGY_SPARK"},
+            {Effect.PinkEnergySpark,    "CONST_ME_PINK_ENERGY_SPARK"},
+            {Effect.WhiteEnergySpark,   "CONST_ME_WHITE_ENERGY_SPARK"},
+            {Effect.YellowEnergySpark,  "CONST_ME_YELLOW_ENERGY_SPARK"},
+            {Effect.MagicPowder,        "CONST_ME_MAGIC_POWDER"},
+            {Effect.PixieExplosion,     "CONST_ME_PIXIE_EXPLOSION"},
+            {Effect.PixieComing,        "CONST_ME_PIXIE_COMING"},
+            {Effect.PixieGoing,         "CONST_ME_PIXIE_GOING"},
+            {Effect.Storm,              "CONST_ME_STORM"},
+            {Effect.StoneStorm,         "CONST_ME_STONE_STORM"},
+            {Effect.BlueGhost,          "CONST_ME_BLUE_GHOST"},
+            {Effect.PinkVortex,         "CONST_ME_PINK_VORTEX"},
+            {Effect.TreasureMap,        "CONST_ME_TREASURE_MAP"},
+            {Effect.PinkBeam,           "CONST_ME_PINK_BEAM"},
+            {Effect.GreenFireworks,     "CONST_ME_GREEN_FIREWORKS"},
+            {Effect.OrangeFireworks,    "CONST_ME_ORANGE_FIREWORKS"},
+            {Effect.PinkFireworks,      "CONST_ME_PINK_FIREWORKS"},
+            {Effect.BlueFireworks,      "CONST_ME_BLUE_FIREWORKS"}
         };
 
         IDictionary<Animation, string> shootTypeNames = new Dictionary<Animation, string>
@@ -383,10 +406,15 @@ namespace OTMonsterCore.Converter
 	                
                     for (int i = 0; i < monster.MonsterEvents.Count; i++)
                     {
-                        dest.WriteLine($"\t\"{monster.MonsterEvents[i]}\"");
+                        dest.Write($"\t\"{monster.MonsterEvents[i]}\"");
+                        
+                        if (i != monster.MonsterEvents.Count - 1)
+                        {
+                            dest.Write(",\n");
+                        }
                     }
                 
-                    dest.WriteLine("}");
+                    dest.WriteLine("\n}");
                     dest.WriteLine("");
                 }
 

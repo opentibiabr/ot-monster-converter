@@ -149,7 +149,31 @@ namespace OTMonsterCore.MonsterTypes
         RagiazBoneCapsule = 172,
         CriticalDamage = 173,
         // 174 is empty
-        PlungingFish = 175
+        PlungingFish = 175, 
+        BlueEnergySpark,
+        OrangeEnergySpark,
+        GreenEnergySpark,
+        PinkEnergySpark,
+        WhiteEnergySpark,
+        YellowEnergySpark,
+        MagicPowder,
+        // 183 is empty
+        PixieExplosion = 184,
+        PixieComing,
+        PixieGoing,
+        // 187 is empty
+        Storm = 188,
+        StoneStorm,
+        // 190 is empty
+        BlueGhost = 191,
+        // 192 is empty
+        PinkVortex = 193,
+        TreasureMap,
+        PinkBeam,
+        GreenFireworks,
+        OrangeFireworks,
+        PinkFireworks,
+        BlueFireworks
     }
 
     public enum Animation

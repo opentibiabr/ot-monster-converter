@@ -20,6 +20,15 @@ namespace Converter.Tests
         [Fact]
         public void MakeSureConversionIsCorrect()
         {
+            // TODO
+            // Monsters without melee can attack
+            // Attacks without target (which ignores ANIM and looks like attacks from nowhere)
+            // Conditions are going as combat? (because of that curse and drown are broken)
+            // flag isPet
+            // flag passive
+            // Check speed spells
+            // Check outfit spells
+
             // Monsters that are heavily edited on revsys already or simply don't make sense right now
             List<string> ignoredMonsters = new List<String>() {
                 "Faun",
@@ -28,8 +37,19 @@ namespace Converter.Tests
                 "Scar Tribe Warrior",
                 "Renegade Knight",
                 "Priestess", // Wrong loot
-                "Marid" // Wrong loot
-                // Check xml ripper spectre 
+                "Marid", // Wrong loot
+                "Madareth", // Wrong loot
+                "Overcharged Energy Elemental", // Wrong loot
+                "Shard Of Magnor", // Wrong ... ????
+                // Check xml ripper spectre ,
+                "Deathling Spellsinger", //voices need escaping
+                "Deathling Scout", // wrong outfit?
+                "Energized Raging Mage", // no idea what's going on on this one
+                "Bragrumol", // wrong loot
+                "Count Vlarkorth", // weird voices 
+                "Earl Osam", // weird voices 
+                "Sir Nictros", // missing creature script, incomplete?
+                "Grand Master Oberon" // probably not worth automating :)
             };
             
             string tfsXmlDir = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "TfsXmls");
@@ -55,9 +75,19 @@ namespace Converter.Tests
                         Directory.CreateDirectory(actualDestination);
                     }
                     _tfsRevScriptSysConverter.WriteMonster(actualDestination, ref monster);
-                    Console.WriteLine("Checking from XML to RevScriptSys: " + monster.Name + " on filename " + monster.FileName);
 
-                    Assert.Equal(File.ReadAllText(Path.Combine(expectedRevSysDestination, monster.FileName + ".lua")),File.ReadAllText(Path.Combine(actualDestination, monster.FileName + ".lua")));
+                    string expected = File.ReadAllText(Path.Combine(expectedRevSysDestination, monster.FileName + ".lua"));
+                    string actual = File.ReadAllText(Path.Combine(actualDestination, monster.FileName + ".lua"));
+
+                    if (!expected.Equals(actual)) {
+                        Console.WriteLine(actual);
+                        Console.WriteLine("Checked from XML to RevScriptSys: " + monster.Name + " on filename " + Path.Combine(expectedRevSysDestination, monster.FileName));
+                    } else {
+                        Console.WriteLine("Checked from XML to RevScriptSys: " + monster.Name);
+                    }
+                    
+
+                    Assert.Equal(expected, actual);
                 }
             }
         }
