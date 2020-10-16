@@ -1,7 +1,7 @@
 local mType = Game.createMonsterType("Shard Of Magnor")
 local monster = {}
 
-monster.description = "a shard Of Magnor"
+monster.description = "a shard of magnor"
 monster.experience = 0
 monster.outfit = {
 	lookType = 1221,
@@ -14,7 +14,7 @@ monster.outfit = {
 }
 
 monster.health = 20000
-monster.maxHealth = monster.health
+monster.maxHealth = 20000
 monster.race = "venom"
 monster.corpse = 0
 monster.speed = 250
@@ -22,8 +22,12 @@ monster.summonCost = 0
 monster.maxSummons = 0
 
 monster.changeTarget = {
-	interval = 4*1000,
+	interval = 4000,
 	chance = 10
+}
+
+monster.strategiesTarget = {
+	nearest = 100,
 }
 
 monster.flags = {
@@ -32,20 +36,31 @@ monster.flags = {
 	hostile = true,
 	convinceable = false,
 	pushable = false,
-	rewardBoss = true,
+	rewardBoss = false,
 	illusionable = false,
 	canPushItems = true,
 	canPushCreatures = true,
-	staticAttackChance = 80,
+	staticAttackChance = 90,
 	targetDistance = 1,
 	runHealth = 0,
 	healthHidden = false,
-	canWalkOnEnergy = false,
-	canWalkOnFire = false,
-	canWalkOnPoison = false,
-	respawnType = RESPAWN_IN_ALL
+	canWalkOnEnergy = true,
+	canWalkOnFire = true,
+	canWalkOnPoison = true
 }
 
+monster.light = {
+	level = 0,
+	color = 0
+}
+
+monster.voices = {
+	interval = 5000,
+	chance = 10,
+}
+
+monster.loot = {
+}
 
 monster.attacks = {
 	{name = "melee", type = COMBAT_PHYSICALDAMAGE, interval = 2*1000, minDamage = 0, maxDamage = -1000, effect = CONST_ME_DRAWBLOOD},
@@ -67,22 +82,10 @@ monster.immunities = {
 }
 
 
-mType.onThink = function(monster, interval)
-end
-
 mType.onAppear = function(monster, creature)
 	if monster:getType():isRewardBoss() then
 		monster:setReward(true)
 	end
-end
-
-mType.onDisappear = function(monster, creature)
-end
-
-mType.onMove = function(monster, creature, fromPosition, toPosition)
-end
-
-mType.onSay = function(monster, creature, type, message)
 end
 
 mType:register(monster)

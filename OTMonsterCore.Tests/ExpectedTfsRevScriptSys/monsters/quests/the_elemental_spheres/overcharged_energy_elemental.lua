@@ -4,42 +4,77 @@ local monster = {}
 monster.description = "an overcharged energy elemental"
 monster.experience = 1300
 monster.outfit = {
-	lookType = 290
+	lookType = 290,
+	lookHead = 0,
+	lookBody = 0,
+	lookLegs = 0,
+	lookFeet = 0,
+	lookAddons = 0,
+	lookMount = 0
 }
 
 monster.health = 1200
-monster.maxHealth = monster.health
-monster.race = "energy"
+monster.maxHealth = 1200
+monster.race = "undead"
 monster.corpse = 8966
 monster.speed = 300
+monster.summonCost = 0
+monster.maxSummons = 0
 
 monster.changeTarget = {
-	interval = 4*1000,
-	chance = 10
+	interval = 20000,
+	chance = 15
+}
+
+monster.strategiesTarget = {
+	nearest = 70,
+	health = 10,
+	damage = 10,
+	random = 10,
 }
 
 monster.flags = {
 	summonable = false,
 	attackable = true,
-	rewardBoss = false,
 	hostile = true,
 	convinceable = false,
+	pushable = false,
+	rewardBoss = false,
 	illusionable = false,
 	canPushItems = true,
 	canPushCreatures = false,
+	staticAttackChance = 85,
 	targetDistance = 1,
-	staticAttackChance = 80,
-	respawnType = RESPAWN_IN_ALL
+	runHealth = 1,
+	healthHidden = false,
+	canWalkOnEnergy = false,
+	canWalkOnFire = false,
+	canWalkOnPoison = false
+}
+
+monster.light = {
+	level = 0,
+	color = 0
+}
+monster.voices = {
+	interval = 5000,
+	chance = 10,
+	{text = "BZZZZZZZZZZ", yell = false}
 }
 
 monster.loot = {
-	{id = 2148, minCount = 1, maxCount = 176, chance = 85090},	-- Gold Coin
-	{id = 8303, chance = 14130},								-- Energy Soil
-	{id = 7591, chance = 9750},									-- Great Health Potion
-	{id = 2150, minCount = 1, maxCount = 2, chance = 4880},		-- Small Amethyst
-	{id = 7439, chance = 1230},									-- Berserk Potion
+	{id = "gold coin", chance = 50000, maxCount = 100},
+	{id = "gold coin", chance = 50000, maxCount = 56},
+	{id = "small amethyst", chance = 10000, maxCount = 2},
+	{id = "berserk potion", chance = 2173},
+	{id = "great health potion", chance = 10000},
+	{id = "energy soil", chance = 14285}
+	-- wrong loot ?
 	{id = 2214, chance = 560},									-- Ring of Healing
 	{id = 8920, chance = 280},									-- Wand of Starstorm
+}
+
+monster.loot = {
 }
 
 monster.attacks = {

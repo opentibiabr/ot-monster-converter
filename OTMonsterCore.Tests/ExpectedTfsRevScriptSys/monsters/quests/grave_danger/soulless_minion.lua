@@ -1,7 +1,7 @@
 local mType = Game.createMonsterType("Soulless Minion")
 local monster = {}
 
-monster.description = "Soulless Minion"
+monster.description = "a Soulless Minion"
 monster.experience = 0
 monster.outfit = {
 	lookType = 68,

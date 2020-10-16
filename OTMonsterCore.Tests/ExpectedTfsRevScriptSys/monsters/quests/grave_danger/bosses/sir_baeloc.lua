@@ -90,7 +90,7 @@ monster.loot = {
 }
 
 monster.attacks = {
-	{name ="melee", interval = 1800, chance = 40, minDamage = -300, maxDamage = -500, type = COMBAT_MANADRAIN, effect = CONST_ME_MAGIC_RED, target = false},
+	{name ="combat", interval = 1800, chance = 40, minDamage = -300, maxDamage = -500, type = COMBAT_MANADRAIN, effect = CONST_ME_MAGIC_RED, target = false},
 	{name ="combat", interval = 1800, chance = 89, minDamage = -400, maxDamage = -1200, type = COMBAT_PHYSICALDAMAGE, length = 7, spread = 3, effect = CONST_ME_DRAWBLOOD, target = false}
 }
 
@@ -120,22 +120,10 @@ monster.immunities = {
 	{type = "bleed", condition = false}
 }
 
-mType.onThink = function(monster, interval)
-end
-
 mType.onAppear = function(monster, creature)
 	if monster:getType():isRewardBoss() then
 		monster:setReward(true)
 	end
-end
-
-mType.onDisappear = function(monster, creature)
-end
-
-mType.onMove = function(monster, creature, fromPosition, toPosition)
-end
-
-mType.onSay = function(monster, creature, type, message)
 end
 
 mType:register(monster)

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Earl Osam" nameDescription="a Earl Osam" race="venom" experience="6300" speed="250" script="rewardboss.lua">
+<monster name="Earl Osam" nameDescription="Earl Osam" race="venom" experience="6300" speed="250" script="rewardboss.lua">
 	<health now="50000" max="50000"/>
 	<look type="1223" head="95" body="38" legs="60" feet="76"  addons="0" corpse="36434" />
 	<targetchange interval="4000" chance="10" />
 	<targetstrategies nearest="100" health="0" damage="0" random="0" />
-	<flags>
+	<flags>]
 		<flag rewardboss="1"/>
 		<flag summonable="0"/>
 		<flag attackable="1"/>

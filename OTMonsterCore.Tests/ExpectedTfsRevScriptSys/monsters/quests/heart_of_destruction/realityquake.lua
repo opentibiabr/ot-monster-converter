@@ -46,7 +46,9 @@ monster.flags = {
 	canWalkOnPoison = false
 }
 
-monster.events = {"HeartBossDeath"}
+monster.events = {
+	"HeartBossDeath"
+}
 
 monster.light = {
 	level = 0,
@@ -118,5 +120,11 @@ monster.immunities = {
 	{type = "invisible", condition = true},
 	{type = "bleed", condition = false}
 }
+
+mType.onAppear = function(monster, creature)
+	if monster:getType():isRewardBoss() then
+		monster:setReward(true)
+	end
+end
 
 mType:register(monster)

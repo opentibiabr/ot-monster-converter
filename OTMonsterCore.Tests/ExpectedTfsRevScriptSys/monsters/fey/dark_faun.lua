@@ -13,8 +13,8 @@ monster.outfit = {
 	lookMount = 0
 }
 
-monster.health = 1300
-monster.maxHealth = 1300
+monster.health = 1100
+monster.maxHealth = 1100
 monster.race = "blood"
 monster.corpse = 29101
 monster.speed = 216
@@ -26,11 +26,11 @@ monster.changeTarget = {
 	chance = 10
 }
 
-monster.changeStrategies = {
+monster.strategiesTarget = {
 	nearest = 70,
 	health = 10,
 	damage = 10,
-	random = 10
+	random = 10,
 }
 
 monster.flags = {

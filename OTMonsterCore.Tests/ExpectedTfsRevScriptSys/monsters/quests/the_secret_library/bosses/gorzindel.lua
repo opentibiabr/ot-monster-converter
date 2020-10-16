@@ -105,10 +105,10 @@ monster.loot = {
 
 monster.attacks = {
 	{name ="melee", interval = 2000, chance = 100, skill = 100, attack = 100, effect = CONST_ME_DRAWBLOOD},
-	{name ="combat", interval = 2000, chance = 15, minDamage = -600, maxDamage = -2800, effect = CONST_ME_DRAWBLOOD},
-	{name ="combat", interval = 1000, chance = 15, minDamage = -800, maxDamage = -1300, effect = CONST_ME_DRAWBLOOD},
-	{name ="combat", interval = 1000, chance = 15, minDamage = -800, maxDamage = -1000, effect = CONST_ME_DRAWBLOOD},
-	{name ="combat", interval = 1000, chance = 15, minDamage = -200, maxDamage = -800, effect = CONST_ME_DRAWBLOOD},
+	{name ="melee", interval = 2000, chance = 15, minDamage = -600, maxDamage = -2800, effect = CONST_ME_DRAWBLOOD},
+	{name ="melee", interval = 1000, chance = 15, minDamage = -800, maxDamage = -1300, effect = CONST_ME_DRAWBLOOD},
+	{name ="melee", interval = 1000, chance = 15, minDamage = -800, maxDamage = -1000, effect = CONST_ME_DRAWBLOOD},
+	{name ="melee", interval = 1000, chance = 15, minDamage = -200, maxDamage = -800, effect = CONST_ME_DRAWBLOOD},
 	{name ="combat", interval = 1000, chance = 15, minDamage = -200, maxDamage = -600, type = COMBAT_DEATHDAMAGE, effect = CONST_ME_MAGIC_RED, target = false}
 }
 
@@ -137,22 +137,10 @@ monster.immunities = {
 	{type = "bleed", condition = false}
 }
 
-mType.onThink = function(monster, interval)
-end
-
 mType.onAppear = function(monster, creature)
 	if monster:getType():isRewardBoss() then
 		monster:setReward(true)
 	end
-end
-
-mType.onDisappear = function(monster, creature)
-end
-
-mType.onMove = function(monster, creature, fromPosition, toPosition)
-end
-
-mType.onSay = function(monster, creature, type, message)
 end
 
 mType:register(monster)

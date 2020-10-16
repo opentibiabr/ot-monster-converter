@@ -1,47 +1,78 @@
 local mType = Game.createMonsterType("Bragrumol")
 local monster = {}
+
 monster.description = "Bragrumol"
 monster.experience = 18000
 monster.outfit = {
-	lookType = 856
+	lookType = 856,
+	lookHead = 0,
+	lookBody = 0,
+	lookLegs = 0,
+	lookFeet = 0,
+	lookAddons = 0,
+	lookMount = 0
 }
 
 monster.health = 38000
-monster.maxHealth = monster.health
+monster.maxHealth = 38000
 monster.race = "fire"
 monster.corpse = 13973
 monster.speed = 220
+monster.summonCost = 0
+monster.maxSummons = 0
 
 monster.changeTarget = {
-	interval = 4*1000,
+	interval = 4000,
 	chance = 10
+}
+
+monster.strategiesTarget = {
+	nearest = 70,
+	health = 10,
+	damage = 10,
+	random = 10,
 }
 
 monster.flags = {
 	summonable = false,
 	attackable = true,
-	rewardBoss = true,
 	hostile = true,
 	convinceable = false,
+	pushable = false,
+	rewardBoss = true,
 	illusionable = false,
 	canPushItems = true,
-	canPushCreatures = false,
-	targetDistance = 1,
-	staticAttackChance = 80,
-	respawnType = RESPAWN_IN_ALL
+	canPushCreatures = true,
+	staticAttackChance = 90,
+	targetDistance = 0,
+	runHealth = 0,
+	healthHidden = false,
+	canWalkOnEnergy = true,
+	canWalkOnFire = true,
+	canWalkOnPoison = true
+}
+
+monster.light = {
+	level = 0,
+	color = 0
+}
+
+monster.voices = {
+	interval = 5000,
+	chance = 10,
 }
 
 monster.loot = {
-	{id = 2152, minCount = 1, maxCount = 8, chance = 100000},	-- Platinum Coin
-	{id = 2156, chance = 88150},								-- Red Gem
-	{id = 7840, minCount = 2, maxCount = 12, chance = 60000},	-- Flaming Arrow
-	{id = 2197, chance = 54000},								-- Stone Skin Amulet
-	{id = 7899, chance = 48000},								-- Magma Coat
-	{id = 36158, chance = 5540},								-- Sea Horse Figurine
-	{id = 36452, chance = 220},									-- Winged Boots
-	{id = 36159, chance = 5760},								-- Golden Mask
-	{id = 35238, chance = 220},									-- Enchanted Theurgic Amulet
-	{id = 31621, chance = 110},									-- Enchanted Blister Ring
+	{id = "Platinum Coin", chance = 100000, maxCount = 8},
+	{id = "Flaming Arrow", chance = 60000, maxCount = 15},
+	{id = "Red Gem", chance = 45000, maxCount = 15},
+	{id = "Sea Horse Figurine", chance = 6700},
+	{id = 36159, chance = 5760},
+	{id = 31621, chance = 110},
+	{id = "Winged Boots", chance = 110},
+	{id = 35238, chance = 250},
+	{id = "Magma Coat", chance = 48000},
+	{id = "Stone Skin Amulet", chance = 54000}
 }
 
 monster.attacks = {
@@ -67,22 +98,10 @@ monster.immunities = {
 	{type = "invisible", condition = true}
 }
 
-mType.onThink = function(monster, interval)
-end
-
 mType.onAppear = function(monster, creature)
 	if monster:getType():isRewardBoss() then
 		monster:setReward(true)
 	end
-end
-
-mType.onDisappear = function(monster, creature)
-end
-
-mType.onMove = function(monster, creature, fromPosition, toPosition)
-end
-
-mType.onSay = function(monster, creature, type, message)
 end
 
 mType:register(monster)

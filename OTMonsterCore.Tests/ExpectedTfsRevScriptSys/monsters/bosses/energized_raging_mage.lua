@@ -1,20 +1,36 @@
 local mType = Game.createMonsterType("Energized Raging Mage")
 local monster = {}
+
 monster.description = "an energized raging mage"
 monster.experience = 0
 monster.outfit = {
-	lookType = 423
+	lookType = 423,
+	lookHead = 0,
+	lookBody = 0,
+	lookLegs = 0,
+	lookFeet = 0,
+	lookAddons = 0,
+	lookMount = 0
 }
 
 monster.health = 3500
-monster.maxHealth = monster.health
+monster.maxHealth = 3500
 monster.race = "blood"
 monster.corpse = 0
-monster.speed = 320
+monster.speed = 230
+monster.summonCost = 0
+monster.maxSummons = 1
 
 monster.changeTarget = {
-	interval = 4*1000,
+	interval = 4000,
 	chance = 10
+}
+
+monster.strategiesTarget = {
+	nearest = 70,
+	health = 10,
+	damage = 10,
+	random = 10,
 }
 
 monster.flags = {
@@ -27,14 +43,34 @@ monster.flags = {
 	illusionable = false,
 	canPushItems = true,
 	canPushCreatures = true,
-	staticAttackChance = 80,
+	staticAttackChance = 70,
 	targetDistance = 1,
-	runHealth = 0,
+	runHealth = 300,
 	healthHidden = false,
 	canWalkOnEnergy = false,
 	canWalkOnFire = false,
-	canWalkOnPoison = false,
-	respawnType = RESPAWN_IN_ALL
+	canWalkOnPoison = false
+}
+
+monster.light = {
+	level = 0,
+	color = 0
+}
+
+monster.summons = {
+	{name = "Golden Servant", chance = 50, interval = 2000}
+}
+
+monster.voices = {
+	interval = 5000,
+	chance = 10,
+	{text = "Behold the all permeating powers I draw from this gate!!", yell = false},
+	{text = "ENERGY!!", yell = false},
+	{text = " FEEL, I FEEEEEL... OMNIPOTENCE!!", yell = false},
+	{text = "MWAAAHAHAAA!! NO ONE!! NO ONE CAN DEFEAT MEEE!!!", yell = false}
+}
+
+monster.loot = {
 }
 
 monster.attacks = {
@@ -59,37 +95,16 @@ monster.elements = {
 	{type = COMBAT_HOLYDAMAGE, percent = 10},
 }
 
-monster.voices = {
-	interval = 2000,
-	chance = 10,
-	{text = "Behold the all permeating powers I draw from this gate!!", yell = false},
-	{text = "ENERGY!!", yell = false},
-	{text = " FEEL, I FEEEEEL... OMNIPOTENCE!!", yell = false},
-	{text = "MWAAAHAHAAA!! NO ONE!! NO ONE CAN DEFEAT MEEE!!!", yell = false}
-}
-
 monster.immunities = {
 	{type = "invisible", condition = true},
 	{type = "fire", combat = true, condition = true},
 	{type = "energy", combat = true, condition = true},
 }
 
-mType.onThink = function(monster, interval)
-end
-
 mType.onAppear = function(monster, creature)
 	if monster:getType():isRewardBoss() then
 		monster:setReward(true)
 	end
-end
-
-mType.onDisappear = function(monster, creature)
-end
-
-mType.onMove = function(monster, creature, fromPosition, toPosition)
-end
-
-mType.onSay = function(monster, creature, type, message)
 end
 
 mType:register(monster)

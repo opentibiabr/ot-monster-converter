@@ -21,8 +21,12 @@ monster.speed = 250
 monster.maxSummons = 6
 
 monster.changeTarget = {
-	interval = 4*1000,
+	interval = 4000,
 	chance = 10
+}
+
+monster.strategiesTarget = {
+	nearest = 100,
 }
 
 monster.flags = {
@@ -35,14 +39,28 @@ monster.flags = {
 	illusionable = false,
 	canPushItems = true,
 	canPushCreatures = true,
-	staticAttackChance = 80,
+	staticAttackChance = 90,
 	targetDistance = 1,
 	runHealth = 0,
 	healthHidden = false,
-	canWalkOnEnergy = false,
-	canWalkOnFire = false,
-	canWalkOnPoison = false,
-	respawnType = RESPAWN_IN_ALL
+	canWalkOnEnergy = true,
+	canWalkOnFire = true,
+	canWalkOnPoison = true
+}
+
+monster.light = {
+	level = 0,
+	color = 0
+}
+
+monster.summons = {
+	{name = "Soulless Minion", chance = 70, interval = 1800}
+}
+monster.voices = {
+	interval = 5000,
+	chance = 10,
+	{text = "You should have brought more friends!", yell = false},
+	{text = "Have at thee, cowards!", yell = false},
 }
 
 monster.loot = {
@@ -77,10 +95,6 @@ monster.loot = {
 	{id = 26186, chance = 12900},-- ring of blue plasma
 }
 
-monster.summons = {
-	{name = "Soulless Minion", chance = 70, interval = 1800},
-}
-
 monster.attacks = {
 	{name = "melee", type = COMBAT_PHYSICALDAMAGE, interval = 2*1000, minDamage = 0, maxDamage = -600, effect = CONST_ME_DRAWBLOOD},
 	{name = "combat", type = COMBAT_FIREDAMAGE, interval = 2*1000, chance = 15, length = 8, spread = 0, minDamage = -500, maxDamage = -1500, effect = CONST_ME_HITBYFIRE},
@@ -105,29 +119,10 @@ monster.immunities = {
 	{type = "invisible", condition = true},
 }
 
-monster.voices = {
-	interval = 5000,
-	chance = 10,
-	{text = "You should have brought more friends!", yell = false},
-	{text = "Have at thee, cowards!", yell = false},
-}
-
-mType.onThink = function(monster, interval)
-end
-
 mType.onAppear = function(monster, creature)
 	if monster:getType():isRewardBoss() then
 		monster:setReward(true)
 	end
-end
-
-mType.onDisappear = function(monster, creature)
-end
-
-mType.onMove = function(monster, creature, fromPosition, toPosition)
-end
-
-mType.onSay = function(monster, creature, type, message)
 end
 
 mType:register(monster)

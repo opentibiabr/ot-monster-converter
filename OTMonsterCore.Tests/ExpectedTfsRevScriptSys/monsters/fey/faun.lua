@@ -1,9 +1,14 @@
 local mType = Game.createMonsterType("Faun")
 local monster = {}
+
 monster.description = "a faun"
 monster.experience = 800
 monster.outfit = {
-	lookType = 980, lookHead = 61, lookBody = 96, lookLegs = 95, lookFeet = 43
+	lookType = 980,
+	lookHead = 61,
+	lookBody = 96,
+	lookLegs = 95,
+	lookFeet = 43
 }
 
 monster.health = 900
@@ -87,20 +92,5 @@ monster.voices = {
 monster.immunities = {
 	{type = "invisible", condition = true}
 }
-
-mType.onThink = function(monster, interval)
-end
-
-mType.onAppear = function(monster, creature)
-end
-
-mType.onDisappear = function(monster, creature)
-end
-
-mType.onMove = function(monster, creature, fromPosition, toPosition)
-end
-
-mType.onSay = function(monster, creature, type, message)
-end
 
 mType:register(monster)

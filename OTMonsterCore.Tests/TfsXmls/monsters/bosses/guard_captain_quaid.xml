@@ -5,7 +5,6 @@
 	<targetchange interval="4000" chance="10" />
 	<targetstrategies nearest="70" health="10" damage="10" random="10" />
 	<flags>
-		<flag rewardboss="1" />
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -20,6 +19,7 @@
 		<flag canwalkonenergy="1" />
 		<flag canwalkonfire="1" />
 		<flag canwalkonpoison="1" />
+		<flag rewardboss="1" />
 	</flags>
 	<attacks>
 		<attack name="melee" interval="2000" min="0" max="-580" />

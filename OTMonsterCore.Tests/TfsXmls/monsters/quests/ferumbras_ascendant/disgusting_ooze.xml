@@ -18,7 +18,7 @@
 	<flag runonhealth="85" />
 	</flags>
 	<script>
-		<event name="disgustingOoze" />
+		<event name="DisgustingOozeDeath" />
 	</script>
 	<attacks>
 		<attack name="melee" interval="2000" skill="50" attack="80" poison="300" />

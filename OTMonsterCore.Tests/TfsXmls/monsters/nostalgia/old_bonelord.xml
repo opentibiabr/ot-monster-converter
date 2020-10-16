@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Beholder" nameDescription="a Beholder" race="venom" experience="170" speed="170">
+<monster name="Beholder" refName="Old Beholder" nameDescription="a beholder" race="venom" experience="170" speed="170">
 	<health now="260" max="260" />
 	<look type="924" corpse="5992" />
 	<targetchange interval="4000" chance="10" />
@@ -58,9 +58,9 @@
 	</summons>
 	<voices interval="5000" chance="10">
 		<voice sentence="Olho por Olho!" />
-		<voice sentence="Estou olhando para você!" />
-		<voice sentence="Deixe-me dar uma olhada em você!" />
-		<voice sentence="Você tem o olhar!" />
+		<voice sentence="Estou olhando para voce!" />
+		<voice sentence="Deixe-me dar uma olhada em voce!" />
+		<voice sentence="Voce tem o olhar!" />
 	</voices>
 	<loot>
 		<item name="gold coin" countmax="82" chance="65000" />

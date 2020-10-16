@@ -4,7 +4,13 @@ local monster = {}
 monster.description = "a deathling spellsinger"
 monster.experience = 6400
 monster.outfit = {
-	lookType = 1088
+	lookType = 1088,
+	lookHead = 0,
+	lookBody = 0,
+	lookLegs = 0,
+	lookFeet = 0,
+	lookAddons = 0,
+	lookMount = 0
 }
 
 monster.health = 7200
@@ -46,6 +52,13 @@ monster.flags = {
 monster.light = {
 	level = 0,
 	color = 0
+}
+
+monster.voices = {
+	interval = 5000,
+	chance = 10,
+	{text = 'BOQOL"°', yell = false},
+	{text = 'QOL" VBOXCL°', yell = false}
 }
 
 monster.loot = {
@@ -100,27 +113,5 @@ monster.immunities = {
 	{type = "invisible", condition = true},
 	{type = "bleed", condition = false}
 }
-
-monster.voices = {
-	interval = 5000,
-	chance = 10,
-	{text = 'BOQOL"°', yell = false},
-	{text = 'QOL" VBOXCL°', yell = false}
-}
-
-mType.onThink = function(monster, interval)
-end
-
-mType.onAppear = function(monster, creature)
-end
-
-mType.onDisappear = function(monster, creature)
-end
-
-mType.onMove = function(monster, creature, fromPosition, toPosition)
-end
-
-mType.onSay = function(monster, creature, type, message)
-end
 
 mType:register(monster)

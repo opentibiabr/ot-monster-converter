@@ -14,15 +14,20 @@ monster.outfit = {
 }
 
 monster.health = 50000
-monster.maxHealth = monster.health
+monster.maxHealth = 50000
 monster.race = "venom"
 monster.corpse = 36434
 monster.speed = 250
+monster.summonCost = 0
 monster.maxSummons = 5
 
 monster.changeTarget = {
-	interval = 4*1000,
+	interval = 4000,
 	chance = 10
+}
+
+monster.strategiesTarget = {
+	nearest = 100,
 }
 
 monster.flags = {
@@ -35,14 +40,29 @@ monster.flags = {
 	illusionable = false,
 	canPushItems = true,
 	canPushCreatures = true,
-	staticAttackChance = 80,
+	staticAttackChance = 90,
 	targetDistance = 1,
 	runHealth = 0,
 	healthHidden = false,
-	canWalkOnEnergy = false,
-	canWalkOnFire = false,
-	canWalkOnPoison = false,
-	respawnType = RESPAWN_IN_ALL
+	canWalkOnEnergy = true,
+	canWalkOnFire = true,
+	canWalkOnPoison = true
+}
+
+monster.light = {
+	level = 0,
+	color = 0
+}
+
+monster.summons = {
+	{name = "Frozen Soul", chance = 20, interval = 2000}
+}
+
+monster.voices = {
+	interval = 5000,
+	chance = 10,
+	{text = "I ... will ... rise ... again!", yell = false},
+	{text = "I... will ... get ... you ... all!", yell = false},
 }
 
 monster.loot = {
@@ -109,29 +129,10 @@ monster.immunities = {
 	{type = "invisible", condition = true},
 }
 
-monster.voices = {
-	interval = 5000,
-	chance = 10,
-	{text = "I ... will ... rise ... again!", yell = false},
-	{text = "I... will ... get ... you ... all!", yell = false},
-}
-
-mType.onThink = function(monster, interval)
-end
-
 mType.onAppear = function(monster, creature)
 	if monster:getType():isRewardBoss() then
 		monster:setReward(true)
 	end
-end
-
-mType.onDisappear = function(monster, creature)
-end
-
-mType.onMove = function(monster, creature, fromPosition, toPosition)
-end
-
-mType.onSay = function(monster, creature, type, message)
 end
 
 mType:register(monster)
