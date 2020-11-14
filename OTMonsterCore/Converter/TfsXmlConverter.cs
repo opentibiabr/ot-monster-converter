@@ -309,6 +309,25 @@ namespace OTMonsterCore.Converter
                 monster.AttackRandomPercent = tfsMonster.targetstrategies.random;
             }
 
+            // Respawn type
+            if (tfsMonster.respawntype != null) {
+                Console.WriteLine($"respawnType!");
+                monster.RespawnType = new MonsterRespawnType();
+                if (tfsMonster.respawntype.period != null) {
+                    if (tfsMonster.respawntype.period == "night") {
+                        monster.RespawnType.Period = RespawnPeriod.Night;
+                    } else if (tfsMonster.respawntype.period == "day") {
+                        monster.RespawnType.Period = RespawnPeriod.Day;
+                    } else {
+                        monster.RespawnType.Period = RespawnPeriod.All;
+                    }
+                }
+
+                if (tfsMonster.respawntype.underground > 0) {
+                    monster.RespawnType.Underground = (tfsMonster.respawntype.underground > 0);
+                }
+            }
+
             // flags
             if ((tfsMonster.flags != null) &&
                 (tfsMonster.flags.flag != null))
@@ -393,6 +412,10 @@ namespace OTMonsterCore.Converter
                         else if (x.attr[0].Name == "isboss" || x.attr[0].Name == "rewardboss")
                         {
                             monster.IsBoss = value == 1;
+                        }
+                        else if (x.attr[0].Name == "pet")
+                        {
+                            monster.Pet = value == 1;
                         }
                         else
                         {
@@ -794,59 +817,50 @@ namespace OTMonsterCore.Converter
                         if (attack.fire != 0)
                         {
                             spell.Condition = Condition.Fire;
-                            spell.StartDamage = attack.poison;
+                            spell.TotalDamage = attack.fire;
                             spell.Tick = (attack.tick != 0) ? attack.tick : 9000;
                         }
                         else if (attack.poison != 0)
                         {
                             spell.Condition = Condition.Poison;
-                            spell.StartDamage = attack.poison;
+                            spell.TotalDamage = attack.poison;
                             spell.Tick = (attack.tick != 0) ? attack.tick : 4000;
                         }
                         else if (attack.energy != 0)
                         {
                             spell.Condition = Condition.Energy;
-                            spell.StartDamage = attack.energy;
+                            spell.TotalDamage = attack.energy;
                             spell.Tick = (attack.tick != 0) ? attack.tick : 10000;
                         }
                         else if (attack.drown != 0)
                         {
                             spell.Condition = Condition.Drown;
-                            spell.StartDamage = attack.drown;
+                            spell.TotalDamage = attack.drown;
                             spell.Tick = (attack.tick != 0) ? attack.tick : 5000;
                         }
                         else if (attack.dazzle != 0)
                         {
                             spell.Condition = Condition.Dazzled;
-                            spell.StartDamage = attack.dazzle;
+                            spell.TotalDamage = attack.dazzle;
                             spell.Tick = (attack.tick != 0) ? attack.tick : 10000;
                         }
                         else if (attack.curse != 0)
                         {
                             spell.Condition = Condition.Cursed;
-                            spell.StartDamage = attack.curse;
+                            spell.TotalDamage = attack.curse;
                             spell.Tick = (attack.tick != 0) ? attack.tick : 4000;
                         }
                         else if (attack.bleed != 0)
                         {
                             spell.Condition = Condition.Bleeding;
-                            spell.StartDamage = attack.bleed;
+                            spell.TotalDamage = attack.bleed;
                             spell.Tick = (attack.tick != 0) ? attack.tick : 4000;
                         }
                         else if (attack.physical != 0)
                         {
                             spell.Condition = Condition.Bleeding;
-                            spell.StartDamage = attack.physical;
+                            spell.TotalDamage = attack.physical;
                             spell.Tick = (attack.tick != 0) ? attack.tick : 4000;
-                        }
-                    }
-                    else if (attack.name == "speed")
-                    {
-                        spell.SpeedChange = attack.speedchange;
-                        spell.Duration = attack.duration;
-                        if (attack.duration == 0)
-                        {
-                            spell.Duration = 10000; // Default when no duration set
                         }
                     }
                     else
@@ -881,6 +895,24 @@ namespace OTMonsterCore.Converter
                         if (attack.range > 0)
                         {
                             spell.Range = (uint?)attack.range;
+                        }
+
+                        if (attack.radius > 0)
+                        {
+                            spell.Radius = (uint?)attack.radius;
+                        } 
+
+                        if (attack.speedchange != 0) {
+                            spell.SpeedChange = attack.speedchange;
+                        }
+
+                        if (attack.duration != 0) {
+                            spell.Duration = attack.duration;
+                     
+                            if (attack.duration == 0)
+                            {
+                                spell.Duration = 10000; // Default when no duration set
+                            }
                         }
 
                         if (attack.length > 0)
@@ -1020,6 +1052,7 @@ namespace OTMonsterCore.Converter
         //public int script; //todo: how to handle
 
         public TargetStrategies targetstrategies;
+        public XmlRespawnType respawntype;
         public TFSXmlHealth health;
         public Flags flags;
         public TfsXmlScript script;
@@ -1044,6 +1077,14 @@ namespace OTMonsterCore.Converter
         public uint damage = 0;
         [XmlAttribute]
         public uint random = 0;
+    }
+
+    [XmlRoot(ElementName = "respawntype")]
+    public class XmlRespawnType {
+        [XmlAttribute]
+        public string period { get; set; }
+        [XmlAttribute]
+        public int underground = 0;
     }
 
     [XmlRoot(ElementName = "health")]

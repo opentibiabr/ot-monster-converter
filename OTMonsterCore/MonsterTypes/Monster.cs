@@ -17,6 +17,7 @@ namespace OTMonsterCore.MonsterTypes
             LookTypeDetails = new DetailedLookType();
             Attacks = new List<Spell>();
             MonsterEvents = new List<string>();
+            RespawnType = new MonsterRespawnType();
 
             SummonCost = 0;
             Attackable = true;
@@ -36,6 +37,7 @@ namespace OTMonsterCore.MonsterTypes
             AvoidFire = true;
             AvoidEnergy = true;
             AvoidPoison = true;
+            Pet = false;
 
             // Immunities
             IgnoreParalyze = false;
@@ -76,6 +78,8 @@ namespace OTMonsterCore.MonsterTypes
         public uint MaxSummons { get; set; }
         public IList<Summon> Summons { get; set; }
 
+        public MonsterRespawnType RespawnType { get; set; }
+
         // Look
         public uint CorpseId { get; set; }
         public uint OutfitIdLookType { get; set; }
@@ -105,6 +109,7 @@ namespace OTMonsterCore.MonsterTypes
         public bool HideHealth { get; set; }
         public bool IsBlockable { get; set; }
         public bool IsBoss { get; set; }
+        public bool Pet { get; set; }
         public IList<string> MonsterEvents { get; set; }
 
         // Walk Behavior

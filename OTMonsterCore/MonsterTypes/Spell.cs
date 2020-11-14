@@ -29,7 +29,7 @@ namespace OTMonsterCore.MonsterTypes
         public int? Skill { get; set; }
         // Spell Condition stuff
         public int? Tick { get; set; }
-        public int? StartDamage { get; set; }
+        public int? TotalDamage { get; set; }
         public Condition? Condition { get; set; }
         // Outfit stuff
         public string MonsterName { get; set; }

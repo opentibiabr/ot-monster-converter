@@ -36,10 +36,11 @@ namespace OTMonsterCore.Converter
             {Condition.Dazzled,     "dazzled"},
             {Condition.Cursed,      "cursed"},
         };
-       
-        IDictionary<string, Condition> StringToCondition = new Dictionary<string, Condition> 
+
+        IDictionary<string, Condition> StringToCondition = new Dictionary<string, Condition>
         {
             {"poison",      Condition.Poison},
+            {"earth",       Condition.Poison},
             {"fire",        Condition.Fire},
             {"energy",      Condition.Energy},
             {"bleed",       Condition.Bleeding},
@@ -47,6 +48,7 @@ namespace OTMonsterCore.Converter
             {"paralyze",    Condition.Paralyze},
             {"drown",       Condition.Drown},
             {"freezing",    Condition.Freezing},
+            {"freeze",      Condition.Freezing},
             {"dazzled",     Condition.Dazzled},
             {"cursed",      Condition.Cursed},
             {"curse",       Condition.Cursed}
@@ -271,6 +273,13 @@ namespace OTMonsterCore.Converter
             {Animation.RoyalStar,        "CONST_ANI_ROYALSTAR"}
         };
 
+        IDictionary<RespawnPeriod, string> respawnPeriodNames = new Dictionary<RespawnPeriod, string>
+        {
+            {RespawnPeriod.All      , "RESPAWNPERIOD_ALL"},
+            {RespawnPeriod.Day      , "RESPAWNPERIOD_DAY"},
+            {RespawnPeriod.Night    , "RESPAWNPERIOD_NIGHT"}
+        };
+
         public string FileExtRegEx { get => "*.lua"; }
 
         public bool WriteMonster(string directory, ref Monster monster)
@@ -286,7 +295,7 @@ namespace OTMonsterCore.Converter
                 {
                     dest.WriteLine($"local mType = Game.createMonsterType(\"{monster.RefName}\")");
                 }
-                else 
+                else
                 {
                     dest.WriteLine($"local mType = Game.createMonsterType(\"{monster.Name}\")");
                 }
@@ -311,9 +320,9 @@ namespace OTMonsterCore.Converter
                     dest.WriteLine($"\tlookHead = {monster.LookTypeDetails.Head},");
                     dest.WriteLine($"\tlookBody = {monster.LookTypeDetails.Body},");
                     dest.WriteLine($"\tlookLegs = {monster.LookTypeDetails.Legs},");
-                    dest.WriteLine($"	lookFeet = {monster.LookTypeDetails.Feet},");
-                    dest.WriteLine($"	lookAddons = {monster.LookTypeDetails.Addons},");
-                    dest.WriteLine($"	lookMount = {monster.LookTypeDetails.Mount}");
+                    dest.WriteLine($"\tlookFeet = {monster.LookTypeDetails.Feet},");
+                    dest.WriteLine($"\tlookAddons = {monster.LookTypeDetails.Addons},");
+                    dest.WriteLine($"\tlookMount = {monster.LookTypeDetails.Mount}");
                 }
                 dest.WriteLine("}");
                 dest.WriteLine("");
@@ -360,6 +369,15 @@ namespace OTMonsterCore.Converter
                     dest.WriteLine("");
                 }
 
+                if (monster.RespawnType != null && monster.RespawnType.Period != RespawnPeriod.All)
+                {
+                    dest.WriteLine("monster.respawnType = {");
+                    dest.WriteLine($"\tperiod = {respawnPeriodNames[monster.RespawnType.Period]},");
+                    dest.WriteLine($"\tunderground = {monster.RespawnType.Underground.ToString().ToLower()}");
+                    dest.WriteLine("}");
+                    dest.WriteLine("");
+                }
+
                 // Flags
                 dest.WriteLine("monster.flags = {");
                 if (monster.SummonCost > 0)
@@ -389,31 +407,32 @@ namespace OTMonsterCore.Converter
                 dest.WriteLine($"\ttargetDistance = {monster.TargetDistance},");
                 dest.WriteLine($"\trunHealth = {monster.RunOnHealth},");
                 dest.WriteLine($"\thealthHidden = {monster.HideHealth.ToString().ToLower()},");
-                // TODO: Enable this when monsters fixed without changes
-                // dest.WriteLine($"\tisBlockable = {monster.IsBlockable.ToString().ToLower()},");
+                dest.WriteLine($"\tisBlockable = {monster.IsBlockable.ToString().ToLower()},");
                 bool canwalk = !monster.AvoidEnergy;
                 dest.WriteLine($"\tcanWalkOnEnergy = {canwalk.ToString().ToLower()},");
                 canwalk = !monster.AvoidFire;
                 dest.WriteLine($"\tcanWalkOnFire = {canwalk.ToString().ToLower()},");
                 canwalk = !monster.AvoidPoison;
-                dest.WriteLine($"\tcanWalkOnPoison = {canwalk.ToString().ToLower()}");
+                dest.WriteLine($"\tcanWalkOnPoison = {canwalk.ToString().ToLower()},");
+                dest.WriteLine($"\tpet = {monster.Pet.ToString().ToLower()}");
                 dest.WriteLine("}");
                 dest.WriteLine("");
 
                 // Events
-                if (monster.MonsterEvents != null && monster.MonsterEvents.Count > 0) {
+                if (monster.MonsterEvents != null && monster.MonsterEvents.Count > 0)
+                {
                     dest.WriteLine("monster.events = {");
-	                
+
                     for (int i = 0; i < monster.MonsterEvents.Count; i++)
                     {
                         dest.Write($"\t\"{monster.MonsterEvents[i]}\"");
-                        
+
                         if (i != monster.MonsterEvents.Count - 1)
                         {
                             dest.Write(",\n");
                         }
                     }
-                
+
                     dest.WriteLine("\n}");
                     dest.WriteLine("");
                 }
@@ -433,7 +452,8 @@ namespace OTMonsterCore.Converter
                     for (int i = 0; i < monster.Summons.Count; i++)
                     {
                         summon = $"\t{{name = \"{monster.Summons[i].Name}\", chance = {Math.Round(monster.Summons[i].Chance * 100)}, interval = {monster.Summons[i].Rate}";
-                        if (monster.Summons[i].Max > 0) {
+                        if (monster.Summons[i].Max > 0)
+                        {
                             summon += $", max = {monster.Summons[i].Max}";
                         }
 
@@ -446,7 +466,9 @@ namespace OTMonsterCore.Converter
                         if (i == monster.Summons.Count - 1)
                         {
                             summon = summon.TrimEnd(',');
-                        } else {
+                        }
+                        else
+                        {
                             summon += ",";
                         }
                         dest.WriteLine(summon);
@@ -597,12 +619,25 @@ namespace OTMonsterCore.Converter
                 dest.WriteLine("}");
                 dest.WriteLine("");
 
-                if(monster.IsBoss) {
+                if (monster.IsBoss)
+                {
                     dest.WriteLine(
-                        $"mType.onAppear = function(monster, creature)\n" +
+                        $"mType.onThink = function(monster, interval)\n" +
+                        "end\n" +
+                        "\n" +
+                        "mType.onAppear = function(monster, creature)\n" +
                         "\tif monster:getType():isRewardBoss() then\n" +
                         "\t\tmonster:setReward(true)\n" +
                         "\tend\n" +
+                        "end\n" +
+                        "\n" +
+                        "mType.onDisappear = function(monster, creature)\n" +
+                        "end\n" +
+                        "\n" +
+                        "mType.onMove = function(monster, creature, fromPosition, toPosition)\n" +
+                        "end\n" +
+                        "\n" +
+                        "mType.onSay = function(monster, creature, type, message)\n" +
                         "end\n"
                     );
                 }
@@ -652,16 +687,7 @@ namespace OTMonsterCore.Converter
                 // no.
                 if (spell.Condition != null)
                 {
-                    attack += $", condition = {{type = {ConditionToTFsConstants[(Condition)spell.Condition]}, startDamage = {spell.StartDamage}, interval = {spell.Tick}}}";
-                }
-            }
-            else if (spell.Name == "speed")
-            {
-                attack = $"	{{name =\"{spell.Name}\", interval = {spell.Interval}, chance = {spell.Chance}";
-
-                if ((spell.SpeedChange != null) && (spell.Duration != null))
-                {
-                    attack += $", speedChange = {spell.SpeedChange}, duration = {spell.Duration}";
+                    attack += $", condition = {{type = {ConditionToTFsConstants[(Condition)spell.Condition]}, totalDamage = {spell.TotalDamage}, interval = {spell.Tick}}}";
                 }
             }
             else if (spell.Name.Contains("invisible"))
@@ -674,104 +700,84 @@ namespace OTMonsterCore.Converter
             }
             else
             {
-                if (spell.Name.Contains("field") ||
-                    spell.Name.Contains("drunk") )
-                {
-                    attack = $"	{{name =\"{spell.Name}\", interval = {spell.Interval}, chance = {spell.Chance}";
-                }
-                else if (spell.Name.Contains("outfit")) 
-                {
-                    attack = $"	{{name =\"{spell.Name}\", interval = {spell.Interval}, chance = {spell.Chance}";
-                }
-                else if (spell.Name.Contains("condition"))
+                if (spell.Name.Contains("condition"))
                 {
                     string condition = spell.Name.Replace("condition", "");
                     attack = $"\t-- {ConditionToComment[condition]}\n";
-                    attack += $"\t{{name =\"combat\", type = {ConditionToCombat[condition]}, interval = {spell.Interval}, chance = {spell.Chance}";
-                    // TODO: Activate after fixes
-                    //attack += $"\t{{name =\"condition\", type = {ConditionToCombat[condition]}, condition = {{type = {ConditionToTFsConstants[StringToCondition[condition]]}, interval = {spell.Interval}, chance = {spell.Chance}";
-                                    
+                    attack += $"\t{{name =\"condition\", type = {ConditionToTFsConstants[StringToCondition[condition]]}, interval = {spell.Interval}, chance = {spell.Chance}";
+
                 }
-                else/* if (spell.DamageElement != null) */
+                else if (spell.DamageElement != null)
                 {
-                    attack = $"	{{name =\"combat\", interval = {spell.Interval}, chance = {spell.Chance}";
-                }/*
-                TODO: Enable this when monsters fixed without changes
-                else 
-                {   
+                    attack = $"	{{name =\"combat\", interval = {spell.Interval}, chance = {spell.Chance}, type = {CombatDamageNames[(CombatDamage)spell.DamageElement]}";
+                }
+                else
+                {
                     attack = $"	{{name =\"{spell.Name.ToLower()}\", interval = {spell.Interval}, chance = {spell.Chance}";
-                }*/
+                }
 
-
-                if (spell.Name != "outfit")
+                if ((spell.SpeedChange != null) && (spell.Duration != null))
                 {
-                    if ((spell.MinDamage != null) && (spell.MaxDamage != null))
+                    attack += $", speedChange = {spell.SpeedChange}";
+                }
+                if (spell.MinDamage != null)
+                {
+                    attack += $", minDamage = {spell.MinDamage}";
+                }
+                if ((spell.MaxDamage != null))
+                {
+                    attack += $", maxDamage = {spell.MaxDamage}";
+                }
+                if (spell.Range != null)
+                {
+                    attack += $", range = {spell.Range}";
+                }
+                if (spell.Radius != null)
+                {
+                    attack += $", radius = {spell.Radius}";
+                }
+                if (spell.Length != null)
+                {
+                    attack += $", length = {spell.Length}";
+                }
+                if (spell.Spread != null)
+                {
+                    attack += $", spread = {spell.Spread}";
+                }
+                if (spell.ShootEffect != null)
+                {
+                    attack += $", shootEffect = {shootTypeNames[(Animation)spell.ShootEffect]}";
+                }
+                if (spell.AreaEffect != null)
+                {
+                    attack += $", effect = {magicEffectNames[(Effect)spell.AreaEffect]}";
+                }
+                if (spell.Target != null)
+                {
+                    attack += $", target = {spell.Target.ToString().ToLower()}";
+                }
+                if (spell.Duration != null)
+                {
+                    attack += $", duration = {spell.Duration}";
+                }
+
+                if (spell.Name.Contains("condition"))
+                {
+
+                    if (spell.TotalDamage != null)
                     {
-                        attack += $", minDamage = {spell.MinDamage}, maxDamage = {spell.MaxDamage}";
+                        attack += $", totalDamage = {spell.TotalDamage}";
                     }
-                    else if (spell.MaxDamage != null)
+                }
+                if (spell.Name == "outfit")
+                {
+                    if (!string.IsNullOrEmpty(spell.MonsterName))
                     {
-                        attack += $", minDamage = {spell.MinDamage}";
+                        attack += $", outfitMonster = \"{spell.MonsterName}\"";
                     }
-                    if (spell.DamageElement != null)
+                    else if (spell.ItemId != null)
                     {
-                        attack += $", type = {CombatDamageNames[(CombatDamage)spell.DamageElement]}";
-                    }
-                    if (spell.Range != null)
-                    {
-                        attack += $", range = {spell.Range}";
-                    }
-                    if (spell.Radius != null)
-                    {
-                        attack += $", radius = {spell.Radius}";
-                    }
-                    if (spell.Length != null)
-                    {
-                        attack += $", length = {spell.Length}";
-                    }
-                    if (spell.Spread != null)
-                    {
-                        attack += $", spread = {spell.Spread}";
-                    }
-                    if (spell.ShootEffect != null)
-                    {
-                        attack += $", shootEffect = {shootTypeNames[(Animation)spell.ShootEffect]}";
-                    }
-                    if (spell.AreaEffect != null)
-                    {
-                        attack += $", effect = {magicEffectNames[(Effect)spell.AreaEffect]}";
-                    }
-                    if (spell.Target != null)
-                    {
-                        attack += $", target = {spell.Target.ToString().ToLower()}";
-                    }
-                    if (spell.Duration != null)
-                    {
-                        attack += $", duration = {spell.Duration}";
-                    }
-                    if (spell.Name.Contains("condition"))
-                    {
-                        // Not implemented?
-                        if (spell.Tick != null)
-                        {
-                            attack += $", tick = {spell.Tick}";
-                        }
-                        // Not implemented?
-                        if (spell.StartDamage != null)
-                        {
-                            attack += $", start = {spell.StartDamage}";
-                        }
-                    }
-                    if (spell.Name == "outfit")
-                    {
-                        if (!string.IsNullOrEmpty(spell.MonsterName))
-                        {
-                            attack += $", monster = \"{spell.MonsterName}\"";
-                        }
-                        else if (spell.ItemId != null)
-                        {
-                            attack += $", item = {spell.ItemId}";
-                        }
+                        attack += $", outfitItem = {spell.ItemId}";
                     }
                 }
             }

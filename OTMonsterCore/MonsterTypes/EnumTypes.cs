@@ -250,4 +250,10 @@ namespace OTMonsterCore.MonsterTypes
         Say,
         Yell
     }
+
+    public enum RespawnPeriod {
+        All,
+        Day,
+        Night
+    }
 }
